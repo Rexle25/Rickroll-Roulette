@@ -1,6 +1,6 @@
 # Rickroll Roulette
 
-<<<<<<< HEAD
+
 Rickroll Roulette is a fun Chrome browser extension that gives you a chance to get Rickrolled whenever you click on something! The twist? You can adjust the probability yourself.
 
 ## Features
