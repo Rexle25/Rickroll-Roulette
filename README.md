@@ -42,25 +42,7 @@ This extension is designed for **Firefox** and **Chrome**. It must be loaded in 
 4. **Verify Installation**:
    - Once loaded, the extension is active. You should see its icon in your browser toolbar.
 
-#### **Chrome** *(Optional, falls vorhanden)*
 
-1. **Download the Extension**:
-   - Klone das Repository wie oben beschrieben.
-
-2. **Öffne Chrome Erweiterungsseite**:
-   - Öffne Chrome und gehe zu `chrome://extensions/`.
-
-3. **Entwicklermodus aktivieren**:
-   - Schalte den **"Developer mode"** (Entwicklermodus) oben rechts ein.
-
-4. **Erweiterung laden**:
-   - Klicke auf **"Entpackte Erweiterung laden"**.
-   - Navigiere zum `chrome`-Ordner im geklonten Repository und wähle ihn aus.
-
-5. **Überprüfen**:
-   - Die Erweiterung sollte nun in der Toolbar von Chrome sichtbar sein.
-
----
 
 ## Adjusting the Probability
 
