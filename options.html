@@ -1,17 +1,28 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rickroll Einstellungen</title>
+  <title>Rickroll Settings</title>
 </head>
 <body>
-  <h1>Rickroll Wahrscheinlichkeit</h1>
-  <label for="probability">Wahrscheinlichkeit (%):</label>
-  <input type="number" id="probability" min="0" max="100" value="1">
-  <button id="save">Speichern</button>
-  <p id="status"></p>
+  <h1>Rickroll Settings</h1>
+  <label for="probability">Probability (%):</label>
+  <input type="number" id="probability" min="0" max="100" step="1">
+  <button id="save">Save</button>
 
-  <script src="options.js"></script>
+  <script>
+    // Load and display the current probability
+    browser.storage.sync.get("probability").then((result) => {
+      document.getElementById("probability").value = (result.probability || 0.1) * 100;
+    });
+
+    // Save the new probability
+    document.getElementById("save").addEventListener("click", () => {
+      const probValue = parseFloat(document.getElementById("probability").value) / 100;
+      browser.storage.sync.set({ probability: probValue });
+      alert(`Rickroll probability set to ${probValue * 100}%`);
+    });
+  </script>
 </body>
 </html>

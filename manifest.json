@@ -1,15 +1,25 @@
 {
-  "manifest_version": 3,
-  "name": "Rickroll Roulette",
-  "version": "1.1",
-  "description": "With an adjustable probability you will get rickrolled!",
-  "permissions": ["storage"],
-  "host_permissions": ["<all_urls>"],
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
-    }
+  "manifest_version": 2,
+  "name": "Rickroll Redirect",
+  "version": "1.0",
+  "description": "A browser extension that redirects links to a Rickroll with a customizable probability.",
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
   ],
-  "options_page": "options.html"
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "rickroll@youraddon.com",
+      "strict_min_version": "42.0"
+    }
+  }
 }
