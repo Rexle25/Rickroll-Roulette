@@ -19,4 +19,3 @@ chrome.storage.sync.get("probability", (data) => {
     document.getElementById("probability").value = data.probability;
   }
 });
-
