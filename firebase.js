@@ -19,3 +19,26 @@ const app = initializeApp(firebaseConfig);
 // Firebase initialisieren
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+// Funktion zum Abrufen des Rickroll-Zählers
+async function fetchRickrollCount() {
+  const docRef = doc(db, "rickrolls", "counter");
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data().count;
+  } else {
+    console.log("Keine Daten gefunden. Initialisiere Zähler.");
+    await setDoc(docRef, { count: 0 }); // Falls es noch nicht existiert, setze auf 0
+    return 0;
+  }
+}
+
+// Funktion zum Erhöhen des Rickroll-Zählers
+async function incrementRickrollCount() {
+  const docRef = doc(db, "rickrolls", "counter");
+  await updateDoc(docRef, {
+    count: increment(1)
+  });
+}
+
+export { fetchRickrollCount, incrementRickrollCount };
