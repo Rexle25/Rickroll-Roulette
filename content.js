@@ -1,60 +1,40 @@
-// Firebase-Initialisierung (Firebase-Konfiguration und SDK-Import aus firebase.js)
-import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
-const db = getFirestore();
+import { fetchRickrollCount, incrementRickrollCount } from "./firebase.js";
 
 // Standard-Wahrscheinlichkeit (falls keine gespeichert wurde)
 let probability = 1; // Default: 1% (entspricht 0.01)
 
-// Lade gespeicherte Wahrscheinlichkeit aus chrome.storage
 chrome.storage.sync.get("probability", (data) => {
   if (data.probability !== undefined) {
     probability = data.probability / 100; // Prozent in Dezimal umrechnen
   }
 });
 
-// Firebase-Dokumentreferenz für die Rickroll-Zählung
-const counterDocRef = doc(db, "rickrolls", "counter");
-
-// Zähler anzeigen
-function displayRickrollCount() {
-  getDoc(counterDocRef)
-    .then((docSnap) => {
-      if (docSnap.exists()) {
-        document.getElementById("rickrollCount").textContent = docSnap.data().count;
-      } else {
-        console.log("Kein Zähler gefunden!");
-      }
-    })
-    .catch((error) => {
-      console.error("Fehler beim Abrufen des Zählers:", error);
-    });
+// Zeige die Gesamtzahl der Rickrolls oben rechts
+async function displayRickrollCount() {
+  const count = await fetchRickrollCount();
+  const counterElement = document.createElement("div");
+  counterElement.id = "rickroll-counter";
+  counterElement.style.position = "fixed";
+  counterElement.style.top = "10px";
+  counterElement.style.right = "10px";
+  counterElement.style.padding = "10px";
+  counterElement.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+  counterElement.style.color = "white";
+  counterElement.style.fontSize = "16px";
+  counterElement.style.borderRadius = "5px";
+  counterElement.textContent = `Gesamt-Rickrolls: ${count}`;
+  document.body.appendChild(counterElement);
 }
 
-// Zähler erhöhen und in Firebase speichern
-function incrementRickrollCounter() {
-  updateDoc(counterDocRef, {
-    count: increment(1) // Zähler um 1 erhöhen
-  })
-  .then(() => {
-    console.log("Rickroll-Zähler aktualisiert!");
-    displayRickrollCount();
-  })
-  .catch((error) => {
-    console.error("Fehler beim Aktualisieren des Zählers:", error);
-  });
-}
-
-// Event-Listener für Klicks auf der Seite
+// Wenn ein Klick ein Rickroll auslöst, erhöhe den Zähler
 document.addEventListener("click", (event) => {
   if (Math.random() < probability) { // Benutzerdefinierte Wahrscheinlichkeit
     event.preventDefault();
     event.stopPropagation();
-    window.location.href = "https://www.youtube.com/watch?v=oHg5SJYRHA0"; // Rickroll-Link
-
-    // Zähler erhöhen
-    incrementRickrollCounter();
+    incrementRickrollCount(); // Rickroll zählen
+    window.location.href = "https://www.youtube.com/watch?v=oHg5SJYRHA0&t=44s"; // Rickroll-Link
   }
 });
 
-// Zähler initial anzeigen
+// Zähler anzeigen
 displayRickrollCount();
